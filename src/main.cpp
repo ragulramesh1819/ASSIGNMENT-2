@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <stdexcept>
 #include<nlohmann/json.hpp>
 #include <vector>
 #include "../Operators/include/Conv2D.h"
@@ -39,14 +40,19 @@ std::vector<T> readBinaryFile(const std::string& filePath) {
 
 
 
+
 int main() {
     //Load the JSON configuration
 
-      std::vector<std::vector<std::vector<float>>> input=std::vector<std::vector<std::vector<float>>>(32, 
-                        std::vector<std::vector<float>>(32, std::vector<float>(3, 2.0)) // Dummy values (1.0)
+    std::vector<std::vector<std::vector<float>>> input=std::vector<std::vector<std::vector<float>>>(32, 
+                        std::vector<std::vector<float>>(32, std::vector<float>(3, 1.0)) // Dummy values (1.0)
                     ); 
 
-       std::vector<float> input_flatten;   
+    std::vector<float> input_flatten;   
+
+
+
+
     std::ifstream configFile("E:/Assignment-2-C++/Project_Root/configs/json/model_config_ragul.json");
     if (!configFile.is_open()) {
         std::cout<< "Failed to open configuration file.\n";
@@ -63,7 +69,6 @@ int main() {
 
             std::string layerType = layer["type"];
             if (layerType == "Conv2D" || layerType == "BatchNormalization" || layerType == "MaxPooling2D" || layerType == "Dense" || layerType == "Flatten") {
-                // inputData = processLayer(layer, input); // Pass current input and get updated output
 
                     const json layerConfig=layer;
 
@@ -81,7 +86,6 @@ int main() {
                     
 
                          // Define layer parameters
-                        //  std :: cout << "inside conv2d" << std::endl;
                         std::vector<int> inputShape = layerConfig["attributes"]["input_shape"];      // Height, Width, Channels
                         std::vector<int> outputShape = layerConfig["attributes"]["output_shape"];    // Height, Width, Channels
                         std::vector<int> kernelSize = layerConfig["attributes"]["kernel_size"];      // Kernel dimensions
@@ -89,7 +93,7 @@ int main() {
                         std::string Bias_weight = layerConfig["weights_file_paths"][1];
                         std::vector<int> strides = {1, 1};                                           // Strides
                         std::string padding = "same";                                                // Padding type
-                        std::string activation = "relu";  
+                        std::string activation = layerConfig["attributes"]["activation"];            //
                         Conv2D convLayer(inputShape, outputShape, kernelSize, strides, padding, activation);
                         convLayer.loadWeights(Kernel_weight,Bias_weight);
 
@@ -103,7 +107,7 @@ int main() {
                     
                     else if (layerType == "BatchNormalization") {
 
-                        std::cout << "Performing BatchNormalization operation.\n";
+                        std::cout << "Performing BatchNormalization operation. \n ";
 
 
                         // Initialize the batch normalization layer
@@ -128,7 +132,7 @@ int main() {
                     
                     
                     else if (layerType == "MaxPooling2D") {
-                        std::cout << "Performing MaxPooling2D operation.\n";
+                        std::cout << "Performing MaxPooling2D operation.  \n";
     
 
                        // Define expected shapes and parameters
@@ -140,7 +144,6 @@ int main() {
                         // Instantiate the MaxPooling2D layer
                         MaxPooling2D maxPoolingLayer(inputShape, outputShape, strides, padding);
 
-                        // Prepare the output tensor (3D vector)
                         std::vector<std::vector<std::vector<float>>> output;
 
                         // Apply max pooling
@@ -150,7 +153,7 @@ int main() {
 
                     }
                       else if (layerType == "Flatten") {
-                        std::cout << "Performing Flatten operation.\n";
+                        std::cout << "Performing Flatten operation. \n";
                         // Dense logic placeholder
 
 
@@ -171,7 +174,7 @@ int main() {
                     
                     
                     else if (layerType == "Dense") {
-                        std::cout << "Performing Dense operation.\n";
+                        std::cout << "Performing Dense operation. \n";
                         
                         std::string weights_file = layerConfig["weights_file_paths"][0];
                         std::string bias_file =layerConfig["weights_file_paths"][1];
@@ -190,6 +193,13 @@ int main() {
 
                         //Get and print the output of the DenseLayer
                         input_flatten = dense_layer.get_output();
+                        printf("/n");
+
+                        for(auto& val:input_flatten){
+                            std::cout<< val <<" ";
+                        }
+                        printf("\n");
+
                     }
 
                     else {
