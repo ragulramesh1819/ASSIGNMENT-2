@@ -9,8 +9,6 @@
 
 class DenseLayer {
 public:
-    // Default constructor (optional, remove if not needed)
-    // DenseLayer();
 
     // Parameterized constructor
     DenseLayer(const std::vector<float>& input_data,

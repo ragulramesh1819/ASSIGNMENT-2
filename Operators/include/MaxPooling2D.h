@@ -1,25 +1,4 @@
-// #ifndef MAXPOOLING3D_H
-// #define MAXPOOLING3D_H
 
-// #include <vector>
-
-// class MaxPooling3D {
-// public:
-//     // Constructor: pool size, stride
-//     MaxPooling3D(int poolHeight, int poolWidth, int stride);
-
-//     // Method to apply max pooling on 3D input tensor
-//     std::vector<std::vector<std::vector<float>>> applyMaxPooling(const std::vector<std::vector<std::vector<float>>>& input);
-
-// private:
-//     int poolHeight;
-//     int poolWidth;
-//     int stride;
-// };
-
-// #endif // MAXPOOLING3D_H
-
-// max_pooling2d.h
 #ifndef MAX_POOLING2D_H
 #define MAX_POOLING2D_H
 
