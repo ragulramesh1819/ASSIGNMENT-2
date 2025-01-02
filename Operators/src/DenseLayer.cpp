@@ -68,15 +68,21 @@ void DenseLayer::relu() {
 
 void DenseLayer::softmax() {
     float sum_exp = 0.0f;
+    float max_value = *std::max_element(output_data_.begin(), output_data_.end());
 
-    // Compute the sum of exponentials of the output values
-    for (const auto& value : output_data_) {
-        sum_exp += std::exp(value);
+     for (const auto& value : output_data_) {
+        sum_exp += std::exp(value - max_value);  // Subtract max_value to avoid overflow
     }
 
     // Normalize each value to get the softmax result
     for (auto& value : output_data_) {
-        value = std::exp(value) / sum_exp;
+        value = std::exp(value - max_value) / sum_exp;  // Subtract max_value in the denominator as well
+    }
+    
+    float max_softmax = *std::max_element(output_data_.begin(), output_data_.end());
+
+    for (auto& value : output_data_) {
+        value = (value == max_softmax) ? 1.0f : 0.0f;
     }
 }
 
