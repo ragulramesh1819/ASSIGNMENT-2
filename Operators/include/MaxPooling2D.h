@@ -25,6 +25,7 @@
 
 #include <vector>
 #include <cstdint>
+#include<string>
 
 class MaxPooling2D {
 public:

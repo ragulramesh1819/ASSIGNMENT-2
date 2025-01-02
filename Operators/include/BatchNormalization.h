@@ -1,51 +1,39 @@
-// #ifndef BATCHNORMALIZATION_H
-// #define BATCHNORMALIZATION_H
-
-// #include <vector>
-// #include <string>
-
-// class BatchNormalization {
-// public:
-//     // Constructor to initialize with input shape and weight file paths
-//     BatchNormalization(const std::vector<int>& input_shape,
-//                        const std::vector<std::string>& weight_file_paths);
-
-//     // Load weights from the specified binary files
-//     void loadWeights();
-
-//     // Perform batch normalization on the input 3D tensor
-//     void forward(const std::vector<std::vector<std::vector<float>>>& input);
-
-//     // Save the output tensor to a binary file
-//     void saveOutput(const std::string& output_file_path) const;
-
-//     // Getter for the normalized output
-//     const std::vector<std::vector<std::vector<float>>>& getOutput() const;
-
-// private:
-//     std::vector<int> input_shape;  // Input shape [height, width, channels]
-//     std::vector<std::string> weight_file_paths;  // File paths for gamma, beta, moving_mean, moving_variance
-//     std::vector<float> gamma;  // Scale parameter (gamma)
-//     std::vector<float> beta;   // Shift parameter (beta)
-//     std::vector<float> moving_mean;  // Moving mean parameter
-//     std::vector<float> moving_variance;  // Moving variance parameter
-//     std::vector<std::vector<std::vector<float>>> output;  // Output tensor
-
-//     // Helper functions to read binary data
-//     void readBinaryFile(const std::string& file_path, std::vector<float>& data);
-// };
-
-// #endif // BATCHNORMALIZATION_H
-// batchnormalization.h
-#ifndef BATCHNORMALIZATION_H
-#define BATCHNORMALIZATION_H
+#ifndef BATCH_NORMALIZATION_H
+#define BATCH_NORMALIZATION_H
 
 #include <vector>
+#include <string>
 
-// Function declaration for batch normalization
-void batch_normalization(const std::vector<std::vector<std::vector<float>>>& input,
-                         const std::vector<float>& gamma, const std::vector<float>& beta,
-                         const std::vector<float>& moving_mean, const std::vector<float>& moving_variance,
-                         std::vector<std::vector<std::vector<float>>>& output);
+class BatchNormalization {
+public:
+    // Constructor and Destructor
+    BatchNormalization();
+    ~BatchNormalization();
 
-#endif // BATCHNORMALIZATION_H
+    // Method to load weights (gamma, beta, moving mean, moving variance)
+    void LoadWeights(const std::vector<std::string>& weight_paths);
+
+    // Method to apply batch normalization on input
+    void ApplyBatchNormalization(const std::vector<std::vector<std::vector<float>>>& input,
+                                  std::vector<std::vector<std::vector<float>>>& output);
+
+    // Setters and Getters for input and output shapes
+    void SetInputShape(const std::vector<int>& shape);
+    void SetOutputShape(const std::vector<int>& shape);
+    std::vector<int> GetInputShape() const;
+    std::vector<int> GetOutputShape() const;
+
+private:
+    std::vector<float> gamma;       // Scaling factor
+    std::vector<float> beta;        // Shifting factor
+    std::vector<float> moving_mean; // Moving mean for normalization
+    std::vector<float> moving_variance; // Moving variance for normalization
+
+    std::vector<int> input_shape;   // Input shape (height, width, channels)
+    std::vector<int> output_shape;  // Output shape
+
+    // Helper function to normalize a 3D vector
+    void Normalize3DVector(std::vector<std::vector<std::vector<float>>>& input);
+};
+
+#endif // BATCH_NORMALIZATION_H
