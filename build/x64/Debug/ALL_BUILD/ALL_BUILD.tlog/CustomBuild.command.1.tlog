@@ -1,0 +1,10 @@
+^E:\ASSIGNMENT-2-C++\PROJECT_ROOT\CMAKELISTS.TXT
+setlocal
+C:\Users\ragul\cmake-3.31.3-windows-x86_64\bin\cmake.exe -SE:/Assignment-2-C++/Project_Root -BE:/Assignment-2-C++/Project_Root/build --check-stamp-file E:/Assignment-2-C++/Project_Root/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

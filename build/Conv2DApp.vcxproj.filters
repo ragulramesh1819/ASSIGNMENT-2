@@ -4,7 +4,19 @@
     <ClCompile Include="E:\Assignment-2-C++\Project_Root\Operators\src\BatchNormalization.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="E:\Assignment-2-C++\Project_Root\Operators\src\conv2d.cpp">
+    <ClCompile Include="E:\Assignment-2-C++\Project_Root\Operators\src\Conv2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\Assignment-2-C++\Project_Root\Operators\src\DenseLayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\Assignment-2-C++\Project_Root\Operators\src\Flatten.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\Assignment-2-C++\Project_Root\Operators\src\MaxPooling2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="E:\Assignment-2-C++\Project_Root\src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
