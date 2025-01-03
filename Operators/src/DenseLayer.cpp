@@ -79,11 +79,11 @@ void DenseLayer::softmax() {
         value = std::exp(value - max_value) / sum_exp;  // Subtract max_value in the denominator as well
     }
     
-    float max_softmax = *std::max_element(output_data_.begin(), output_data_.end());
+    // float max_softmax = *std::max_element(output_data_.begin(), output_data_.end());
 
-    for (auto& value : output_data_) {
-        value = (value == max_softmax) ? 1.0f : 0.0f;
-    }
+    // for (auto& value : output_data_) {
+    //     value = (value == max_softmax) ? 1.0f : 0.0f;
+    // }
 }
 
 // Getter for the output data

@@ -1,3 +1,4 @@
+
 #include "Conv2D.h"
 #include <iostream>
 #include <fstream>
@@ -20,6 +21,8 @@ void Conv2D::loadWeights(const std::string& kernelFile, const std::string& biasF
 
     int outputChannels = outputShape[2];
     int inputChannels = inputShape[2];
+
+    // Resize kernel to match dimensions
     kernel.resize(outputChannels, 
                   std::vector<std::vector<std::vector<float>>>(inputChannels, 
                   std::vector<std::vector<float>>(kernelSize[0], 
@@ -34,6 +37,7 @@ void Conv2D::loadWeights(const std::string& kernelFile, const std::string& biasF
         }
     }
 
+    // Resize and read biases
     bias.resize(outputChannels);
     biasStream.read(reinterpret_cast<char*>(bias.data()), outputChannels * sizeof(float));
 }
@@ -44,11 +48,13 @@ std::vector<std::vector<std::vector<float>>> Conv2D::padInput(
 
     int padHeight = (outputShape[0] - 1) * strides[0] + kernelSize[0] - inputShape[0];
     int padWidth = (outputShape[1] - 1) * strides[1] + kernelSize[1] - inputShape[1];
-    int padTop = padHeight / 2, padLeft = padWidth / 2;
+
+    int padTop = padHeight / 2, padBottom = padHeight - padTop;
+    int padLeft = padWidth / 2, padRight = padWidth - padLeft;
 
     std::vector<std::vector<std::vector<float>>> paddedInput(
-        inputShape[0] + padHeight, 
-        std::vector<std::vector<float>>(inputShape[1] + padWidth, 
+        inputShape[0] + padTop + padBottom, 
+        std::vector<std::vector<float>>(inputShape[1] + padLeft + padRight, 
                                         std::vector<float>(inputShape[2], 0)));
 
     for (size_t h = 0; h < inputShape[0]; ++h) {
@@ -80,7 +86,11 @@ std::vector<std::vector<std::vector<float>>> Conv2D::forward(
                         for (int kw = 0; kw < kernelSize[1]; ++kw) {
                             int ih = oh * strides[0] + kh;
                             int iw = ow * strides[1] + kw;
-                            output[oh][ow][oc] += paddedInput[ih][iw][ic] * kernel[oc][ic][kh][kw];
+
+                            // Check for valid indices
+                            if (ih >= 0 && ih < paddedInput.size() && iw >= 0 && iw < paddedInput[0].size()) {
+                                output[oh][ow][oc] += paddedInput[ih][iw][ic] * kernel[oc][ic][kh][kw];
+                            }
                         }
                     }
                 }
@@ -94,7 +104,6 @@ std::vector<std::vector<std::vector<float>>> Conv2D::forward(
 }
 
 void Conv2D::applyActivation(std::vector<std::vector<std::vector<float>>>& output) {
-
     if (activation == "relu") {
         for (auto& row : output) {
             for (auto& col : row) {
@@ -103,6 +112,8 @@ void Conv2D::applyActivation(std::vector<std::vector<std::vector<float>>>& outpu
                 }
             }
         }
-        
+    } else {
+        throw std::invalid_argument("Unsupported activation function: " + activation);
     }
 }
+

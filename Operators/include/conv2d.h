@@ -31,3 +31,12 @@ private:
 };
 
 #endif // CONV2D_H
+
+
+
+
+///// single vector 
+
+
+
+
