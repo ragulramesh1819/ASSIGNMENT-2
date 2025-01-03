@@ -1,9 +1,11 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
 #include <stdexcept>
 #include<nlohmann/json.hpp>
 #include <vector>
+#include <cstdint>
 #include "../Operators/include/Conv2D.h"
 #include "../include/MaxPooling2D.h"
 #include "Flatten.h"
@@ -41,6 +43,7 @@ std::vector<T> readBinaryFile(const std::string& filePath) {
 
 
 
+
 int main() {
     //Load the JSON configuration
 
@@ -48,7 +51,10 @@ int main() {
                         std::vector<std::vector<float>>(32, std::vector<float>(3, 1.0)) // Dummy values (1.0)
                     ); 
 
-    std::vector<float> input_flatten;   
+    std::vector<float> input_flatten; 
+    // std::vector<float> input = readBinaryFile<float>("C:/Users/ragul/Downloads/resized_image_binary.bin");//
+
+    
 
 
 
@@ -72,7 +78,7 @@ int main() {
 
                     const json layerConfig=layer;
 
-                    std::cout << "Processing layer: " << layerConfig["layer_name"] << " (" << layerConfig["type"] << ")\n";
+                     std::cout << "Processing layer: " << layerConfig["layer_name"] << " (" << layerConfig["type"] << ")\n";
 
 
                     // Perform operations based on layer type
@@ -85,7 +91,7 @@ int main() {
                         std::cout << "Performing Conv2D operation.\n";
                     
 
-                         // Define layer parameters
+                         //Define layer parameters
                         std::vector<int> inputShape = layerConfig["attributes"]["input_shape"];      // Height, Width, Channels
                         std::vector<int> outputShape = layerConfig["attributes"]["output_shape"];    // Height, Width, Channels
                         std::vector<int> kernelSize = layerConfig["attributes"]["kernel_size"];      // Kernel dimensions
@@ -100,7 +106,21 @@ int main() {
                         std::vector<std::vector<std::vector<float>>> output;
                         output = convLayer.forward(input);
                         input=output;
-                    
+
+                        std::vector<std::vector<float>> data=output[0];
+
+                        std::cout << "==============================="<<layerConfig["layer_name"] <<"========================================" <<std::endl; 
+                        for (const auto& row : data) {
+                            for (const auto& element : row) {
+                                std::cout << element << " ";
+                            }
+                            std::cout << std::endl; // Newline after each row
+                        }
+                        std::cout << std::endl;
+
+
+
+
                     } 
 
 
@@ -126,6 +146,18 @@ int main() {
                         batchNorm.ApplyBatchNormalization(input, output);
                         input =output;
 
+                        
+                        std::vector<std::vector<float>> data=input[0];
+
+                        std::cout << "==============================="<<layerConfig["layer_name"] <<"========================================" <<std::endl; 
+                        for (const auto& row : data) {
+                            for (const auto& element : row) {
+                                std::cout << element << " ";
+                            }
+                            std::cout << std::endl; // Newline after each row
+                        }
+                        std::cout << std::endl;
+
 
 
                     }
@@ -149,6 +181,18 @@ int main() {
                         // Apply max pooling
                         maxPoolingLayer.applyPooling(input, output);
                         input=output;
+
+                        
+                        std::vector<std::vector<float>> data=input[0];
+
+                        std::cout << "==============================="<<layerConfig["layer_name"] <<"========================================" <<std::endl; 
+                        for (const auto& row : data) {
+                            for (const auto& element : row) {
+                                std::cout << element << " ";
+                            }
+                            std::cout << std::endl; // Newline after each row
+                        }
+                        // std::cout <<data.size() <<std::endl;
                        
 
                     }
@@ -167,6 +211,16 @@ int main() {
                         std::vector<float> output;
                         flatten.ApplyFlatten(input, output);
                         input_flatten=output;
+
+                        
+                        std::vector<float> data=input_flatten;
+
+                        std::cout << "==============================="<<layerConfig["layer_name"] <<"========================================" <<std::endl; 
+                        for (const auto& row : data) {
+                                std::cout << row << " ";
+
+                        }
+                        std::cout << std::endl;
 
 
                     }
@@ -193,13 +247,32 @@ int main() {
 
                         //Get and print the output of the DenseLayer
                         input_flatten = dense_layer.get_output();
-                        printf("/n");
-
-                        for(auto& val:input_flatten){
+                       
+                        float sum=0;
+                        //// printing the class values
+                     
+                        if(output_shape[0]==10){
+                                printf("\n");
+                            for(auto& val:input_flatten){
+                            sum+=val;
                             std::cout<< val <<" ";
                         }
-                        printf("\n");
+                          printf("sum = %f \n",sum);
 
+                        }
+                        if(output_shape[0]>100){
+                                printf("\n");
+                                int c=0;
+                            for(auto& val:input_flatten){
+                            sum+=val;
+                            if(c++>100)
+                            break;
+                            std::cout<< val <<" ";
+                        }
+                          printf("sum = %f \n",sum);
+
+                        }
+                        
                     }
 
                     else {
