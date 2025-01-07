@@ -10,8 +10,8 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(VCPKG_INCLUDE_DIRS "E:/Assignment-2-C++/Project_Root/vcpkg")
+set(OpenCV_DIR "C:/Users/ragul/Downloads/opencv")
 
-# message(STATUS "random ${VCPKG_INCLUDE_DIRS}")
 # Include directories
 include_directories(
     ${PROJECT_SOURCE_DIR}/Operators/include
@@ -21,6 +21,7 @@ include_directories(
     ${VCPKG_INCLUDE_DIRS}/installed
     ${PROJECT_SOURCE_DIR}/.vscode
     ${PROJECT_SOURCE_DIR}/vcpkg/installed/x64-windows/include
+    ${OpenCV_INCLUDE_DIRS}
     
 )
 
