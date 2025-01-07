@@ -337,6 +337,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="E:\Assignment-2-C++\Project_Root\Operators\src\DenseLayer.cpp" />
     <ClCompile Include="E:\Assignment-2-C++\Project_Root\Operators\src\Flatten.cpp" />
     <ClCompile Include="E:\Assignment-2-C++\Project_Root\Operators\src\MaxPooling2D.cpp" />
+    <ClCompile Include="E:\Assignment-2-C++\Project_Root\utilities\src\utils.cpp" />
     <ClCompile Include="E:\Assignment-2-C++\Project_Root\src\main.cpp" />
   </ItemGroup>
   <ItemGroup />
