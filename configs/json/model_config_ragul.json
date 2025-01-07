@@ -3,11 +3,11 @@
         {
             "layer_name": "conv2d",
             "type": "Conv2D",
-            "input_file_path": "C:/Users/ragul/Downloads/data/input/conv2d_input.bin",
-            "output_file_path": "C:/Users/ragul/Downloads/data/output/conv2d_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/conv2d_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/conv2d_output.bin",
             "weights_file_paths": [
-                "C:/Users/ragul/Downloads/data/weights/conv2d_kernel.bin",
-                "C:/Users/ragul/Downloads/data/weights/conv2d_bias.bin"
+                "E:/Assignment-2-C++/Project_Root/data/weights/conv2d_kernel.bin",
+                "E:/Assignment-2-C++/Project_Root/data/weights/conv2d_bias.bin"
             ],
             "attributes": {
                 "input_shape": [32, 32, 3],
@@ -25,15 +25,16 @@
             }
         },
         {
+            
             "layer_name": "batch_normalization",
             "type": "BatchNormalization",
-            "input_file_path": "C:/Users/ragul/Downloads/data/input/batch_normalization_input.bin",
-            "output_file_path": "C:/Users/ragul/Downloads/data/output/batch_normalization_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/batch_normalization_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/batch_normalization_output.bin",
             "weights_file_paths": [
-                "C:/Users/ragul/Downloads/data/weights/batch_normalization_gamma.bin",
-                "C:/Users/ragul/Downloads/data/weights/batch_normalization_beta.bin",
-                "C:/Users/ragul/Downloads/data/weights/batch_normalization_moving_mean.bin",
-                "C:/Users/ragul/Downloads/data/weights/batch_normalization_moving_variance.bin"
+                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_gamma.bin",
+                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_beta.bin",
+                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_moving_mean.bin",
+                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_moving_variance.bin"
             ],
             "attributes": {
                 "input_shape": [32, 32, 64],
@@ -43,8 +44,8 @@
         {
             "layer_name": "max_pooling2d",
             "type": "MaxPooling2D",
-            "input_file_path": "C:/Users/ragul/Downloads/data/input/max_pooling2d_input.bin",
-            "output_file_path": "C:/Users/ragul/Downloads/data/output/max_pooling2d_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/max_pooling2d_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/max_pooling2d_output.bin",
             "weights_file_paths": [],
             "attributes": {
                 "input_shape": [32, 32, 64],
@@ -59,8 +60,8 @@
         {
             "layer_name": "dropout",
             "type": "Dropout",
-            "input_file_path": "C:/Users/ragul/Downloads/data/input/dropout_input.bin",
-            "output_file_path": "C:/Users/ragul/Downloads/data/output/dropout_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/dropout_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/dropout_output.bin",
             "weights_file_paths": [],
             "attributes": {
                 "input_shape": [16, 16, 64],
@@ -70,11 +71,11 @@
         {
             "layer_name": "conv2d_1",
             "type": "Conv2D",
-            "input_file_path": "C:/Users/ragul/Downloads/data/input/conv2d_1_input.bin",
-            "output_file_path": "C:/Users/ragul/Downloads/data/output/conv2d_1_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/conv2d_1_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/conv2d_1_output.bin",
             "weights_file_paths": [
-                "C:/Users/ragul/Downloads/data/weights/conv2d_1_kernel.bin",
-                "C:/Users/ragul/Downloads/data/weights/conv2d_1_bias.bin"
+                "E:/Assignment-2-C++/Project_Root/data/weights/conv2d_1_kernel.bin",
+                "E:/Assignment-2-C++/Project_Root/data/weights/conv2d_1_bias.bin"
             ],
             "attributes": {
                 "input_shape": [16, 16, 64],
@@ -94,13 +95,13 @@
         {
             "layer_name": "batch_normalization_1",
             "type": "BatchNormalization",
-            "input_file_path": "C:/Users/ragul/Downloads/data/input/batch_normalization_1_input.bin",
-            "output_file_path": "C:/Users/ragul/Downloads/data/output/batch_normalization_1_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/batch_normalization_1_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/batch_normalization_1_output.bin",
             "weights_file_paths": [
-                "C:/Users/ragul/Downloads/data/weights/batch_normalization_1_gamma.bin",
-                "C:/Users/ragul/Downloads/data/weights/batch_normalization_1_beta.bin",
-                "C:/Users/ragul/Downloads/data/weights/batch_normalization_1_moving_mean.bin",
-                "C:/Users/ragul/Downloads/data/weights/batch_normalization_1_moving_variance.bin"
+                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_1_gamma.bin",
+                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_1_beta.bin",
+                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_1_moving_mean.bin",
+                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_1_moving_variance.bin"
             ],
             "attributes": {
                 "input_shape": [16, 16, 256],
@@ -110,8 +111,8 @@
         {
             "layer_name": "max_pooling2d_1",
             "type": "MaxPooling2D",
-            "input_file_path": "C:/Users/ragul/Downloads/data/input/max_pooling2d_1_input.bin",
-            "output_file_path": "C:/Users/ragul/Downloads/data/output/max_pooling2d_1_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/max_pooling2d_1_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/max_pooling2d_1_output.bin",
             "weights_file_paths": [],
             "attributes": {
                 "input_shape": [16, 16, 256],
@@ -126,8 +127,8 @@
         {
             "layer_name": "dropout_1",
             "type": "Dropout",
-            "input_file_path": "C:/Users/ragul/Downloads/data/input/dropout_1_input.bin",
-            "output_file_path": "C:/Users/ragul/Downloads/data/output/dropout_1_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/dropout_1_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/dropout_1_output.bin",
             "weights_file_paths": [],
             "attributes": {
                 "input_shape": [8, 8, 256],
@@ -137,11 +138,11 @@
         {
             "layer_name": "conv2d_2",
             "type": "Conv2D",
-            "input_file_path": "C:/Users/ragul/Downloads/data/input/conv2d_2_input.bin",
-            "output_file_path": "C:/Users/ragul/Downloads/data/output/conv2d_2_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/conv2d_2_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/conv2d_2_output.bin",
             "weights_file_paths": [
-                "C:/Users/ragul/Downloads/data/weights/conv2d_2_kernel.bin",
-                "C:/Users/ragul/Downloads/data/weights/conv2d_2_bias.bin"
+                "E:/Assignment-2-C++/Project_Root/data/weights/conv2d_2_kernel.bin",
+                "E:/Assignment-2-C++/Project_Root/data/weights/conv2d_2_bias.bin"
             ],
             "attributes": {
                 "input_shape": [8, 8, 256],
@@ -161,13 +162,13 @@
         {
             "layer_name": "batch_normalization_2",
             "type": "BatchNormalization",
-            "input_file_path": "C:/Users/ragul/Downloads/data/input/batch_normalization_2_input.bin",
-            "output_file_path": "C:/Users/ragul/Downloads/data/output/batch_normalization_2_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/batch_normalization_2_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/batch_normalization_2_output.bin",
             "weights_file_paths": [
-                "C:/Users/ragul/Downloads/data/weights/batch_normalization_2_gamma.bin",
-                "C:/Users/ragul/Downloads/data/weights/batch_normalization_2_beta.bin",
-                "C:/Users/ragul/Downloads/data/weights/batch_normalization_2_moving_mean.bin",
-                "C:/Users/ragul/Downloads/data/weights/batch_normalization_2_moving_variance.bin"
+                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_2_beta.bin",
+                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_2_moving_mean.bin",
+                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_2_gamma.bin",
+                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_2_moving_variance.bin"
             ],
             "attributes": {
                 "input_shape": [8, 8, 512],
@@ -177,8 +178,8 @@
         {
             "layer_name": "max_pooling2d_2",
             "type": "MaxPooling2D",
-            "input_file_path": "C:/Users/ragul/Downloads/data/input/max_pooling2d_2_input.bin",
-            "output_file_path": "C:/Users/ragul/Downloads/data/output/max_pooling2d_2_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/max_pooling2d_2_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/max_pooling2d_2_output.bin",
             "weights_file_paths": [],
             "attributes": {
                 "input_shape": [8, 8, 512],
@@ -193,8 +194,8 @@
         {
             "layer_name": "dropout_2",
             "type": "Dropout",
-            "input_file_path": "C:/Users/ragul/Downloads/data/input/dropout_2_input.bin",
-            "output_file_path": "C:/Users/ragul/Downloads/data/output/dropout_2_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/dropout_2_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/dropout_2_output.bin",
             "weights_file_paths": [],
             "attributes": {
                 "input_shape": [4, 4, 512],
@@ -204,8 +205,8 @@
         {
             "layer_name": "flatten",
             "type": "Flatten",
-            "input_file_path": "C:/Users/ragul/Downloads/data/input/flatten_input.bin",
-            "output_file_path": "C:/Users/ragul/Downloads/data/output/flatten_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/flatten_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/flatten_output.bin",
             "weights_file_paths": [],
             "attributes": {
                 "input_shape": [4, 4, 512],
@@ -215,11 +216,11 @@
         {
             "layer_name": "dense",
             "type": "Dense",
-            "input_file_path": "C:/Users/ragul/Downloads/data/input/dense_input.bin",
-            "output_file_path": "C:/Users/ragul/Downloads/data/output/dense_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/dense_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/dense_output.bin",
             "weights_file_paths": [
-                "C:/Users/ragul/Downloads/data/weights/dense_kernel.bin",
-                "C:/Users/ragul/Downloads/data/weights/dense_bias.bin"
+                "E:/Assignment-2-C++/Project_Root/data/weights/dense_kernel.bin",
+                "E:/Assignment-2-C++/Project_Root/data/weights/dense_bias.bin"
             ],
             "attributes": {
                 "input_shape": [8192],
@@ -230,8 +231,8 @@
         {
             "layer_name": "dropout_3",
             "type": "Dropout",
-            "input_file_path": "C:/Users/ragul/Downloads/data/input/dropout_3_input.bin",
-            "output_file_path": "C:/Users/ragul/Downloads/data/output/dropout_3_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/dropout_3_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/dropout_3_output.bin",
             "weights_file_paths": [],
             "attributes": {
                 "input_shape": [512],
@@ -241,11 +242,11 @@
         {
             "layer_name": "dense_1",
             "type": "Dense",
-            "input_file_path": "C:/Users/ragul/Downloads/data/input/dense_1_input.bin",
-            "output_file_path": "C:/Users/ragul/Downloads/data/output/dense_1_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/dense_1_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/dense_1_output.bin",
             "weights_file_paths": [
-                "C:/Users/ragul/Downloads/data/weights/dense_1_kernel.bin",
-                "C:/Users/ragul/Downloads/data/weights/dense_1_bias.bin"
+                "E:/Assignment-2-C++/Project_Root/data/weights/dense_1_kernel.bin",
+                "E:/Assignment-2-C++/Project_Root/data/weights/dense_1_bias.bin"
             ],
             "attributes": {
                 "input_shape": [512],
