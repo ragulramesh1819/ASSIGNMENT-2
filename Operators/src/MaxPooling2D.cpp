@@ -1,50 +1,154 @@
 
+
+// //pra
+
+
+// #include "MaxPooling2D.h"
+// #include <iostream>
+// #include <fstream> // For file handling
+// #include <cmath>
+// #include <limits>
+// #include <chrono> // For timing
+
+// void max_pooling2d(const std::vector<float>& input, std::vector<float>& output,
+//                    const std::array<int, 4>& input_shape, const std::array<int, 4>& output_shape,
+//                    const std::array<int, 2>& pool_size, const std::array<int, 2>& strides,
+//                    const std::string& padding, std::string layername) {
+//     int batch = input_shape[0];
+//     int in_height = input_shape[1], in_width = input_shape[2], in_channels = input_shape[3];
+//     int out_height = (in_height - pool_size[0]) / strides[0] + 1;
+//     int out_width = (in_width - pool_size[1]) / strides[1] + 1;
+
+//     // Resize the output vector to accommodate the output data
+//     output.resize(batch * out_height * out_width * in_channels);
+
+//     // Start timing the max pooling operation
+//     auto start_time = std::chrono::high_resolution_clock::now();
+
+//     for (int b = 0; b < batch; ++b) {
+//         for (int h = 0; h < out_height; ++h) {
+//             for (int w = 0; w < out_width; ++w) {
+//                 for (int c = 0; c < in_channels; ++c) {
+//                     float max_val = -std::numeric_limits<float>::infinity();
+
+//                     for (int ph = 0; ph < pool_size[0]; ++ph) {
+//                         for (int pw = 0; pw < pool_size[1]; ++pw) {
+//                             int ih = h * strides[0] + ph;
+//                             int iw = w * strides[1] + pw;
+
+//                             if (ih >= 0 && ih < in_height && iw >= 0 && iw < in_width) {
+//                                 int input_idx = ((b * in_height + ih) * in_width + iw) * in_channels + c;
+
+//                                 // Debugging: Check if input_idx is within bounds
+//                                 if (input_idx >= input.size() || input_idx < 0) {
+//                                     std::cout << "Input index out of range! index: " << input_idx << std::endl;
+//                                 }
+
+//                                 max_val = std::max(max_val, input[input_idx]);
+//                             }
+//                         }
+//                     }
+
+//                     int output_idx = ((b * out_height + h) * out_width + w) * in_channels + c;
+
+//                     // Debugging: Check if output_idx is within bounds
+//                     if (output_idx >= output.size() || output_idx < 0) {
+//                         std::cout << "Output index out of range! index: " << output_idx << std::endl;
+//                     }
+
+//                     output[output_idx] = max_val;
+//                 }
+//             }
+//         }
+//     }
+
+//     // End timing the max pooling operation
+//     auto end_time = std::chrono::high_resolution_clock::now();
+//     std::chrono::duration<double> execution_time = end_time - start_time;
+    
+//     std::cout << "=====================================================\n";
+
+//     // Prepare to save the first channel to a text file
+//     std::ofstream outfile("F:/MCW/c++ application/Project_Root/data/cpp_outputs/"+layername+".txt");
+//     if (!outfile.is_open()) {
+//         std::cerr << "Error opening file for writing!" << std::endl;
+//         return;
+//     }
+
+//     for (int h = 0; h < out_height; ++h) {
+//         for (int w = 0; w < out_width; ++w) {
+//             int output_idx = ((0 * out_height + h) * out_width + w) * in_channels;
+
+//             // std::cout << output[output_idx] << " "; // Print to console
+//             outfile << output[output_idx] << " ";  // Write to file
+//         }
+//         // std::cout << std::endl;
+//         outfile << std::endl;
+//     }
+//     outfile.close();
+
+//     // Print output shape and execution time
+//     std::cout << "MaxPooling2D Output Shape: [" << batch << ", " << out_height << ", " << out_width << ", " << input_shape[3] << "]" << std::endl;
+//     std::cout << "MaxPooling2D Execution Time: " << execution_time.count() << " seconds" << std::endl;
+//     std::cout << "MaxPooling2D first channel output saved to data/cpp_outputs/"+layername+".txt" << std::endl;
+//     std::cout << "=====================================================\n";
+// }
+
 #include "MaxPooling2D.h"
-#include <algorithm>
-#include <stdexcept>
-#include <limits> // For std::numeric_limits
+#include <iostream>
+#include <cmath>
+#include <limits>
+#include <fstream>
+#include <iomanip>
 
-// Constructor definition
-MaxPooling2D::MaxPooling2D(const std::vector<int>& inputShape, const std::vector<int>& outputShape, 
-                           const std::vector<int>& strides, const std::string& padding)
-    : inputShape(inputShape), outputShape(outputShape), strides(strides), padding(padding) {}
+void max_pooling2d(const std::vector<float>& input, std::vector<float>& output,
+                   const std::array<int, 4>& input_shape, const std::array<int, 4>& output_shape,
+                   const std::array<int, 2>& pool_size, const std::array<int, 2>& strides,
+                   const std::string& padding, const std::string& layer_name) {
+    int batch = input_shape[0];
+    int in_height = input_shape[1], in_width = input_shape[2], in_channels = input_shape[3];
+    int out_height = output_shape[1], out_width = output_shape[2];
 
-// Apply max pooling to the input tensor
-void MaxPooling2D::applyPooling(const std::vector<std::vector<std::vector<float>>>& input,
-                                std::vector<std::vector<std::vector<float>>>& output) {
-    // Validate input dimensions
-    if (input.size() != inputShape[0] || input[0].size() != inputShape[1] || input[0][0].size() != inputShape[2]) {
-        throw std::invalid_argument("Input dimensions do not match the specified input shape.");
-    }
+    for (int b = 0; b < batch; ++b) {
+        for (int h = 0; h < out_height; ++h) {
+            for (int w = 0; w < out_width; ++w) {
+                for (int c = 0; c < in_channels; ++c) {
+                    float max_val = -std::numeric_limits<float>::infinity();
 
-    // Initialize output tensor with zeros
-    output.assign(outputShape[0], std::vector<std::vector<float>>(outputShape[1], std::vector<float>(outputShape[2], 0)));
+                    for (int ph = 0; ph < pool_size[0]; ++ph) {
+                        for (int pw = 0; pw < pool_size[1]; ++pw) {
+                            int ih = h * strides[0] + ph;
+                            int iw = w * strides[1] + pw;
 
-    // Perform max pooling
-    for (int c = 0; c < inputShape[2]; ++c) { // Iterate over channels
-        for (int i = 0; i < outputShape[0]; ++i) { // Iterate over output rows
-            for (int j = 0; j < outputShape[1]; ++j) { // Iterate over output columns
-                int startRow = i * strides[0];
-                int startCol = j * strides[1];
-                output[i][j][c] = getMaxValue(input, startRow, startCol, c, 2); // Assuming pool size of 2x2
+                            if (ih >= 0 && ih < in_height && iw >= 0 && iw < in_width) {
+                                int input_idx = ((b * in_height + ih) * in_width + iw) * in_channels + c;
+                                max_val = std::max(max_val, input[input_idx]);
+                            }
+                        }
+                    }
+
+                    int output_idx = ((b * out_height + h) * out_width + w) * in_channels + c;
+                    output[output_idx] = max_val;
+                }
             }
         }
     }
-}
 
-// Helper function to get the maximum value in the pooling window
-float MaxPooling2D::getMaxValue(const std::vector<std::vector<std::vector<float>>>& input, 
-                                int startRow, int startCol, int channel, int poolSize) {
-    float maxVal = -std::numeric_limits<float>::infinity();
-    for (int i = 0; i < poolSize; ++i) {
-        for (int j = 0; j < poolSize; ++j) {
-            int row = startRow + i;
-            int col = startCol + j;
-            // Check for boundary conditions
-            if (row < inputShape[0] && col < inputShape[1]) {
-                maxVal = std::max(maxVal, input[row][col][channel]);
-            }
-        }
-    }
-    return maxVal;
+    std::cout << "MaxPool Output Size = " << output.size() << std::endl;
+
+    // std::string output_file = "F:/MultiCoreWare/C++ Application/Project_Root/data/cpp_layer_outputs/" + layer_name + ".txt";
+    // std::ofstream file(output_file);
+
+    // if (file.is_open()) {
+
+    //     // Write each value on a new line
+    //     for (size_t i = 0; i < output.size(); ++i) {
+    //         file << std::fixed << std::setprecision(6) << output[i] << "\n";
+    //     }
+
+    //     file.close();
+    //     std::cout << "Saved MaxPool layer output to " << output_file << std::endl;
+    // } else {
+    //     std::cerr << "Failed to open file for writing: " << output_file << std::endl;
+    // }
 }

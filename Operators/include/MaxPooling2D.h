@@ -1,27 +1,31 @@
 
-#ifndef MAX_POOLING2D_H
+
+//  #ifndef MAX_POOLING2D_H
+// #define MAX_POOLING2D_H
+
+// #include <vector>
+// #include <array>
+// #include <string>
+
+// // Function declaration for 1D MaxPooling
+// void max_pooling2d(const std::vector<float>& input, std::vector<float>& output,
+//                    const std::array<int, 4>& input_shape, const std::array<int, 4>& output_shape,
+//                    const std::array<int, 2>& pool_size, const std::array<int, 2>& strides,
+//                    const std::string& padding, std::string layername);
+
+// #endif // MAXPOOLING2D_H
+
+
+ #ifndef MAX_POOLING2D_H
 #define MAX_POOLING2D_H
 
 #include <vector>
-#include <cstdint>
-#include<string>
+#include <array>
+#include <string>
 
-class MaxPooling2D {
-public:
-    MaxPooling2D(const std::vector<int>& inputShape, const std::vector<int>& outputShape, 
-                 const std::vector<int>& strides, const std::string& padding);
-
-    void applyPooling(const std::vector<std::vector<std::vector<float>>>& input,
-                      std::vector<std::vector<std::vector<float>>>& output);
-
-private:
-    std::vector<int> inputShape;
-    std::vector<int> outputShape;
-    std::vector<int> strides;
-    std::string padding;
-
-    float getMaxValue(const std::vector<std::vector<std::vector<float>>>& input, 
-                      int startRow, int startCol, int channel, int poolSize);
-};
+void max_pooling2d(const std::vector<float>& input, std::vector<float>& output,
+                   const std::array<int, 4>& input_shape, const std::array<int, 4>& output_shape,
+                   const std::array<int, 2>& pool_size, const std::array<int, 2>& strides,
+                   const std::string& padding, const std::string& layer_name);
 
 #endif // MAX_POOLING2D_H
