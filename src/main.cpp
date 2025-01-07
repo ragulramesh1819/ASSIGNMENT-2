@@ -10,53 +10,15 @@
 #include "../include/MaxPooling2D.h"
 #include "Flatten.h"
 #include "DenseLayer.h"
-#include "batchnormalization.h"
-
-
-
+#include "BatchNormalization.h"
+#include "utils.h"
+#include <array>
 using json = nlohmann::json;
 
-// Function to read binary data from a file
-template <typename T>
-std::vector<T> readBinaryFile(const std::string& filePath) {
-    std::ifstream file(filePath, std::ios::binary);
-    if (!file) {
-        throw std::runtime_error("Error opening file: " + filePath);
-    }
-
-    // Get the file size
-    file.seekg(0, std::ios::end);
-    size_t fileSize = file.tellg();
-    file.seekg(0, std::ios::beg);
-
-    // Calculate the number of elements in the binary file (assuming each element is of type T)
-    size_t numElements = fileSize / sizeof(T);
-
-    // Read data from the file into a vector
-    std::vector<T> data(numElements);
-    file.read(reinterpret_cast<char*>(data.data()), fileSize);
-    file.close();
-
-    return data;
-}
 
 
-
-
-
-int main() {
-    //Load the JSON configuration
-
-    std::vector<std::vector<std::vector<float>>> input=std::vector<std::vector<std::vector<float>>>(32, 
-                        std::vector<std::vector<float>>(32, std::vector<float>(3, 1.0)) // Dummy values (1.0)
-                    ); 
-
-    std::vector<float> input_flatten; 
-    // std::vector<float> input = readBinaryFile<float>("C:/Users/ragul/Downloads/resized_image_binary.bin");//
-
-    
-
-
+int main()
+{
 
 
     std::ifstream configFile("E:/Assignment-2-C++/Project_Root/configs/json/model_config_ragul.json");
@@ -68,231 +30,178 @@ int main() {
     json config;
     configFile >> config;
 
-    //Process layers sequentially
+     std::string inputPath = "E:/Assignment-2-C++/Project_Root/resized_image_binary.bin";
+    std::vector<float> input;
+    input = std::vector<float>(32*32*3, 1.0); // Dummy values (1.0); 
+    //  input = readBinaryFile<float>(inputPath);
 
-    for (const auto &layer : config["layers"]) {
-        try {
+    // Ouput Classes
+    std::string classes[10] = {"airplane", "automobile", "bird", "cat", "deer", "dog", "frog", "horse", "ship", "truck"};
 
-            std::string layerType = layer["type"];
-            if (layerType == "Conv2D" || layerType == "BatchNormalization" || layerType == "MaxPooling2D" || layerType == "Dense" || layerType == "Flatten") {
+    std::vector<float> output;
 
-                    const json layerConfig=layer;
+    int max_index;
 
-                     std::cout << "Processing layer: " << layerConfig["layer_name"] << " (" << layerConfig["type"] << ")\n";
+    // Placeholder for input and output shapes
+    std::array<int, 4> input_shape{};
+    std::array<int, 4> output_shape{};
 
+    for (const auto& layer : config["layers"]) {
+        std::string type = layer["type"];
+        if (type == "Dropout" || type == "Flatten") continue;
+        else std::cout << "Processing Layer: " << layer["layer_name"] << " (" << type << ")" << std::endl;
 
-                    // Perform operations based on layer type
-                    std::string layerType = layerConfig["type"];
-                    // std::cout<<layerType<<std::endl;
-                    
+        if (type == "Conv2D") {
 
+            // Load weights and bias
+            auto kernel = load_binary_file(layer["weights_file_paths"][0]);
+            auto bias = load_binary_file(layer["weights_file_paths"][1]);
 
-                    if (layerType == "Conv2D") {
-                        std::cout << "Performing Conv2D operation.\n";
-                    
+            // Parse shapes and parameters
 
-                         //Define layer parameters
-                        std::vector<int> inputShape = layerConfig["attributes"]["input_shape"];      // Height, Width, Channels
-                        std::vector<int> outputShape = layerConfig["attributes"]["output_shape"];    // Height, Width, Channels
-                        std::vector<int> kernelSize = layerConfig["attributes"]["kernel_size"];      // Kernel dimensions
-                        std::string Kernel_weight =layerConfig["weights_file_paths"][0];
-                        std::string Bias_weight = layerConfig["weights_file_paths"][1];
-                        std::vector<int> strides = {1, 1};                                           // Strides
-                        std::string padding = "same";                                                // Padding type
-                        std::string activation = layerConfig["attributes"]["activation"];            //
-                        Conv2D convLayer(inputShape, outputShape, kernelSize, strides, padding, activation);
-                        convLayer.loadWeights(Kernel_weight,Bias_weight);
+            input_shape = {1,layer["attributes"]["input_shape"][0],layer["attributes"]["input_shape"][1],layer["attributes"]["input_shape"][2]};
 
-                        std::vector<std::vector<std::vector<float>>> output;
-                        output = convLayer.forward(input);
-                        input=output;
+            output_shape = {1,layer["attributes"]["output_shape"][0],layer["attributes"]["output_shape"][1],layer["attributes"]["output_shape"][2]};
 
-                        std::vector<std::vector<float>> data=output[0];
+            std::array<int, 2> kernel_size = {layer["attributes"]["kernel_size"][0],layer["attributes"]["kernel_size"][1]};
 
-                        std::cout << "==============================="<<layerConfig["layer_name"] <<"========================================" <<std::endl; 
-                        for (const auto& row : data) {
-                            for (const auto& element : row) {
-                                std::cout << element << " ";
-                            }
-                            std::cout << std::endl; // Newline after each row
-                        }
-                        std::cout << std::endl;
+            std::array<int, 2> strides = {layer["attributes"]["strides"][0],layer["attributes"]["strides"][1]};
 
+            std::string padding = layer["attributes"]["padding"];
 
+            std::cout << "InputSize = " << input.size() << std::endl;
+            std::cout << "KernelSize = " << kernel.size() << std::endl;
+            std::cout << "BiasSize = " << bias.size() << std::endl;
 
+            // Allocate memory for the output tensor
+            output.resize(output_shape[1] * output_shape[2] * output_shape[3]);
 
-                    } 
+            // Perform the Conv2D operation
+           
+            conv2d(input, kernel, bias, output, input_shape, output_shape, kernel_size, strides, padding, layer["layer_name"]);
+            input=output;
 
-
-                    
-                    else if (layerType == "BatchNormalization") {
-
-                        std::cout << "Performing BatchNormalization operation. \n ";
-
-
-                        // Initialize the batch normalization layer
-                        BatchNormalization batchNorm;
-
-                        // Load weights from files
-                        batchNorm.LoadWeights(layerConfig["weights_file_paths"]);
-
-                        // Set input and output shapes
-                        batchNorm.SetInputShape(layerConfig["attributes"]["input_shape"]);
-                        batchNorm.SetOutputShape(layerConfig["attributes"]["output_shape"]);
-
-                         std::vector<std::vector<std::vector<float>>> output;
-
-                        // Apply batch normalization
-                        batchNorm.ApplyBatchNormalization(input, output);
-                        input =output;
-
-                        
-                        std::vector<std::vector<float>> data=input[0];
-
-                        std::cout << "==============================="<<layerConfig["layer_name"] <<"========================================" <<std::endl; 
-                        for (const auto& row : data) {
-                            for (const auto& element : row) {
-                                std::cout << element << " ";
-                            }
-                            std::cout << std::endl; // Newline after each row
-                        }
-                        std::cout << std::endl;
-
-
-
+            std::cout << "First Channel output values "<< layer["layer_name"] <<" layer:\n";
+                for (int i = 0; i < 100; ++i) {
+                    std::cout << output[i] << " ";
+                    if(i%32==0 && i!=0){
+                        std::cout<<"\n";
                     }
-                    
-                    
-                    else if (layerType == "MaxPooling2D") {
-                        std::cout << "Performing MaxPooling2D operation.  \n";
-    
-
-                       // Define expected shapes and parameters
-                        std::vector<int> inputShape = layerConfig["attributes"]["input_shape"];      // [height, width, channels]
-                        std::vector<int> outputShape = layerConfig["attributes"]["output_shape"];    // [height, width, channels]
-                        std::vector<int> strides =layerConfig["attributes"]["strides"];              // [stride_height, stride_width]
-                        std::string padding = layerConfig["attributes"]["padding"];
-
-                        // Instantiate the MaxPooling2D layer
-                        MaxPooling2D maxPoolingLayer(inputShape, outputShape, strides, padding);
-
-                        std::vector<std::vector<std::vector<float>>> output;
-
-                        // Apply max pooling
-                        maxPoolingLayer.applyPooling(input, output);
-                        input=output;
-
-                        
-                        std::vector<std::vector<float>> data=input[0];
-
-                        std::cout << "==============================="<<layerConfig["layer_name"] <<"========================================" <<std::endl; 
-                        for (const auto& row : data) {
-                            for (const auto& element : row) {
-                                std::cout << element << " ";
-                            }
-                            std::cout << std::endl; // Newline after each row
-                        }
-                        // std::cout <<data.size() <<std::endl;
-                       
-
-                    }
-                      else if (layerType == "Flatten") {
-                        std::cout << "Performing Flatten operation. \n";
-                        // Dense logic placeholder
-
-
-                        std::vector<int> input_shape = layerConfig["attributes"]["input_shape"];
-                        std::vector<int> output_shape =layerConfig["attributes"]["output_shape"];
-
-                        // Initialize Flatten layer
-                        Flatten flatten;
-                        flatten.SetInputShape(input_shape);
-                        flatten.SetOutputShape(output_shape);
-                        std::vector<float> output;
-                        flatten.ApplyFlatten(input, output);
-                        input_flatten=output;
-
-                        
-                        std::vector<float> data=input_flatten;
-
-                        std::cout << "==============================="<<layerConfig["layer_name"] <<"========================================" <<std::endl; 
-                        for (const auto& row : data) {
-                                std::cout << row << " ";
-
-                        }
-                        std::cout << std::endl;
-
-
-                    }
-                    
-                    
-                    
-                    else if (layerType == "Dense") {
-                        std::cout << "Performing Dense operation. \n";
-                        
-                        std::string weights_file = layerConfig["weights_file_paths"][0];
-                        std::string bias_file =layerConfig["weights_file_paths"][1];
-                         std::string activation =layerConfig["attributes"]["activation"];
-
-                        // Define the input and output shapes
-                        std::vector<int> input_shape =layerConfig["attributes"]["input_shape"];
-                        std::vector<int> output_shape =layerConfig["attributes"]["output_shape"] ;
-
-                       
-                        // Create a DenseLayer object
-                        DenseLayer dense_layer(input_flatten, weights_file, bias_file, input_shape, output_shape, activation);
-
-                        //Perform forward pass
-                        dense_layer.forward();
-
-                        //Get and print the output of the DenseLayer
-                        input_flatten = dense_layer.get_output();
-                       
-                        float sum=0;
-                        //// printing the class values
-                     
-                        if(output_shape[0]==10){
-                                printf("\n");
-                            for(auto& val:input_flatten){
-                            sum+=val;
-                            std::cout<< val <<" ";
-                        }
-                          printf("sum = %f \n",sum);
-
-                        }
-                        if(output_shape[0]>100){
-                                printf("\n");
-                                int c=0;
-                            for(auto& val:input_flatten){
-                            sum+=val;
-                            if(c++>100)
-                            break;
-                            std::cout<< val <<" ";
-                        }
-                          printf("sum = %f \n",sum);
-
-                        }
-                        
-                    }
-
-                    else {
-                        std::cerr << "Unsupported layer type: " << layerType << "\n";
-                    }
-                                
-            }
+                }
+                std::cout << std::endl;
             
             
-             else
-            {
-                std::cout << "Skipping unsupported layer: " << layer["layer_name"] << " (" << layerType << ")\n";
-            }
-        } catch (const std::exception &e)
-        {
-            std::cerr << "Error processing layer " << layer["layer_name"] << ": " << e.what() << "\n";
+            std::cout << input.size() << std::endl;
+            
+
+        } 
+        else if (type == "BatchNormalization") {
+
+            // Load gamma, beta, moving_mean, and moving_variance
+            auto gamma =load_binary_file( layer["weights_file_paths"][0]);
+            auto beta =load_binary_file( layer["weights_file_paths"][1]);
+            auto moving_mean =load_binary_file( layer["weights_file_paths"][2]);
+            auto moving_variance = load_binary_file(layer["weights_file_paths"][3]);
+
+            // Epsilon value for numerical stability
+            float epsilon = 0.001;
+
+            std::cout << "Input size: " << input.size() << std::endl;
+            std::cout << "Gamma size: " << gamma.size() << std::endl;
+            std::cout << "Beta size: " << beta.size() << std::endl;
+            std::cout << "Moving Mean size: " << moving_mean.size() << std::endl;
+            std::cout << "Moving Variance size: " << moving_variance.size() << std::endl;
+
+            input_shape = {1,layer["attributes"]["input_shape"][0],layer["attributes"]["input_shape"][1],layer["attributes"]["input_shape"][2] };
+
+            output_shape = {1,layer["attributes"]["output_shape"][0],layer["attributes"]["output_shape"][1],layer["attributes"]["output_shape"][2]};
+
+            output.resize(output_shape[1] * output_shape[2] * output_shape[3]);
+
+            // Perform the BatchNormalization operation
+            batch_normalization(input, output, gamma, beta, moving_mean, moving_variance, epsilon,output_shape[3], input_shape[1], input_shape[2], layer["layer_name"]);
+            input = output;
+
+
+              std::cout << "First Channel output values "<< layer["layer_name"] <<" layer:\n";
+                for (int i = 0; i < 100; ++i) {
+                    std::cout << output[i] << " ";
+                    if(i%32==0 && i!=0){
+                        std::cout<<"\n";
+                    }
+                }
+                std::cout << std::endl;
+
+        } 
+    else if (type == "MaxPooling2D") {
+
+            // Parse shapes and parameters
+            input_shape = {1,layer["attributes"]["input_shape"][0],layer["attributes"]["input_shape"][1],layer["attributes"]["input_shape"][2]};
+            output_shape = {1,layer["attributes"]["output_shape"][0],layer["attributes"]["output_shape"][1],layer["attributes"]["output_shape"][2]};
+            
+            std::array<int, 2> pool_size = {2,2};
+
+            std::array<int, 2> strides = { layer["attributes"]["strides"][0],layer["attributes"]["strides"][1]};
+            std::string padding = layer["attributes"]["padding"];
+
+            std::cout << "InputSize = " << input.size() << std::endl;
+
+            // Allocate memory for the output tensor
+            output.resize(output_shape[1] * output_shape[2] * output_shape[3]);
+
+            // Perform the MaxPooling2D operation
+            max_pooling2d(input, output, input_shape, output_shape, pool_size, strides, padding, layer["layer_name"]);
+            input=output;
+
+
+              std::cout << "First Channel output values "<< layer["layer_name"] <<" layer:\n";
+                for (int i = 0; i < 100; ++i) {
+                    std::cout << output[i] << " ";
+                    if(i%32==0 && i!=0){
+                        std::cout<<"\n";
+                    }
+                }
+                std::cout << std::endl;
+
+        } 
+        else if (type == "Dense") {
+
+            // Load weights and bias
+            auto weights = load_binary_file(layer["weights_file_paths"][0]);
+            auto bias = load_binary_file(layer["weights_file_paths"][1]);
+
+            // Parse shapes and parameters
+            std::array<int, 2> dense_input_shape = {1, layer["attributes"]["input_shape"][0]};
+            std::array<int, 2> dense_output_shape = {1, layer["attributes"]["output_shape"][0] };
+            std::string activation = layer["attributes"]["activation"];
+
+            // Allocate memory for the output tensor
+            output.resize(dense_output_shape[1]);
+
+            
+            // Perform the Dense operation
+            dense(input, weights, bias, output, dense_input_shape, dense_output_shape, activation, layer["layer_name"]);
+            input=output;
+
+              std::cout << "First Channel output values "<< layer["layer_name"] <<" layer:\n";
+                for (int i = 0; i < 10; ++i) {
+                    std::cout << output[i] << " ";
+                }
+                std::cout << std::endl;
+            
         }
+
+        std::cout << "=======================================================================" << std::endl;
     }
+
+    // // Display the predicted class
+    auto max_elem = std::max_element(output.begin(), output.end());
+    max_index = std::distance(output.begin(), max_elem);
+    
+    std::cout << "Max value: " << *max_elem << " at index " << max_index << std::endl;
+    std::cout << "Predicted Class: " << classes[max_index] << std::endl;
+    std::cout << "Processing completed successfully!" << std::endl;
+    
+    return 0;
 }
 
-
-
-    
