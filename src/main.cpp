@@ -14,8 +14,48 @@
 #include "utils.h"
 #include <array>
 using json = nlohmann::json;
+std::vector<float> convolve1D(const std::vector<float>& input, const std::vector<float>& kernel, int stride = 1) {
+    int input_size = input.size();
+    int kernel_size = kernel.size();
+    int output_size = (input_size - kernel_size) / stride + 1;
+    std::vector<float> output(output_size);
+
+    for (int i = 0; i < output_size; ++i) {
+        output[i] = 0.0f;
+        for (int j = 0; j < kernel_size; ++j) {
+            output[i] += input[i * stride + j] * kernel[j];
+        }
+    }
+
+    return output;
+}
+
+void print_data(std::vector<float> output,std::array<int, 4> output_shape,std::string layername){
 
 
+    
+            std::cout << "First Channel output values "<< layername <<" layer:\n";
+                int output_height = output_shape[1];
+                int output_width = output_shape[2];
+                int num_channels = output_shape[3];
+
+                std::cout<<"Output Height: "<<output_height<<std::endl;
+                std::cout<<"Output Width: "<<output_width<<std::endl;
+                std::cout<<"Number of Channels: "<<num_channels<<std::endl;
+
+               for (int i = 0; i < output_height; ++i) {
+                    for (int j = 0; j < output_width; ++j) {
+                        // Calculate the index for the first channel
+                        int index = (i * output_width + j) * num_channels;  // For first channel (channel 0)
+
+                        // Access and print the first channel value at [i][j]
+                        std::cout << output[index] << " ";  // Print the value for the first channel
+                    }
+                    std::cout << std::endl;  // New line after each row
+                }
+            
+
+}
 
 int main()
 {
@@ -32,8 +72,8 @@ int main()
 
      std::string inputPath = "E:/Assignment-2-C++/Project_Root/resized_image_binary.bin";
     std::vector<float> input;
-    input = std::vector<float>(32*32*3, 1.0); // Dummy values (1.0); 
-    //  input = readBinaryFile<float>(inputPath);
+    // input = std::vector<float>(32*32*3, 1.0f); // Dummy values (1.0); 
+     input = readBinaryFile<float>(inputPath);
 
     // Ouput Classes
     std::string classes[10] = {"airplane", "automobile", "bird", "cat", "deer", "dog", "frog", "horse", "ship", "truck"};
@@ -80,18 +120,8 @@ int main()
            
             conv2d(input, kernel, bias, output, input_shape, output_shape, kernel_size, strides, padding, layer["layer_name"]);
             input=output;
+            print_data(output,output_shape,layer["layer_name"]);
 
-            std::cout << "First Channel output values "<< layer["layer_name"] <<" layer:\n";
-                for (int i = 0; i < 100; ++i) {
-                    std::cout << output[i] << " ";
-                    if(i%32==0 && i!=0){
-                        std::cout<<"\n";
-                    }
-                }
-                std::cout << std::endl;
-            
-            
-            std::cout << input.size() << std::endl;
             
 
         } 
@@ -122,15 +152,7 @@ int main()
             batch_normalization(input, output, gamma, beta, moving_mean, moving_variance, epsilon,output_shape[3], input_shape[1], input_shape[2], layer["layer_name"]);
             input = output;
 
-
-              std::cout << "First Channel output values "<< layer["layer_name"] <<" layer:\n";
-                for (int i = 0; i < 100; ++i) {
-                    std::cout << output[i] << " ";
-                    if(i%32==0 && i!=0){
-                        std::cout<<"\n";
-                    }
-                }
-                std::cout << std::endl;
+            print_data(output,output_shape,layer["layer_name"]);
 
         } 
     else if (type == "MaxPooling2D") {
@@ -154,14 +176,7 @@ int main()
             input=output;
 
 
-              std::cout << "First Channel output values "<< layer["layer_name"] <<" layer:\n";
-                for (int i = 0; i < 100; ++i) {
-                    std::cout << output[i] << " ";
-                    if(i%32==0 && i!=0){
-                        std::cout<<"\n";
-                    }
-                }
-                std::cout << std::endl;
+             print_data(output,output_shape,layer["layer_name"]);
 
         } 
         else if (type == "Dense") {
@@ -188,7 +203,7 @@ int main()
                     std::cout << output[i] << " ";
                 }
                 std::cout << std::endl;
-            
+
         }
 
         std::cout << "=======================================================================" << std::endl;
