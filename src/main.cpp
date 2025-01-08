@@ -14,21 +14,7 @@
 #include "utils.h"
 #include <array>
 using json = nlohmann::json;
-std::vector<float> convolve1D(const std::vector<float>& input, const std::vector<float>& kernel, int stride = 1) {
-    int input_size = input.size();
-    int kernel_size = kernel.size();
-    int output_size = (input_size - kernel_size) / stride + 1;
-    std::vector<float> output(output_size);
 
-    for (int i = 0; i < output_size; ++i) {
-        output[i] = 0.0f;
-        for (int j = 0; j < kernel_size; ++j) {
-            output[i] += input[i * stride + j] * kernel[j];
-        }
-    }
-
-    return output;
-}
 
 void print_data(std::vector<float> output,std::array<int, 4> output_shape,std::string layername){
 
@@ -70,7 +56,7 @@ int main()
     json config;
     configFile >> config;
 
-     std::string inputPath = "E:/Assignment-2-C++/Project_Root/resized_image_binary.bin";
+    std::string inputPath = "E:/Assignment-2-C++/Project_Root/resized_image_binary.bin";
     std::vector<float> input;
     // input = std::vector<float>(32*32*3, 1.0f); // Dummy values (1.0); 
      input = readBinaryFile<float>(inputPath);
@@ -100,7 +86,7 @@ int main()
             // Parse shapes and parameters
 
             input_shape = {1,layer["attributes"]["input_shape"][0],layer["attributes"]["input_shape"][1],layer["attributes"]["input_shape"][2]};
-
+      
             output_shape = {1,layer["attributes"]["output_shape"][0],layer["attributes"]["output_shape"][1],layer["attributes"]["output_shape"][2]};
 
             std::array<int, 2> kernel_size = {layer["attributes"]["kernel_size"][0],layer["attributes"]["kernel_size"][1]};

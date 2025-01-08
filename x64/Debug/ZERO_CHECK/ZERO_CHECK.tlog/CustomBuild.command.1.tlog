@@ -1,0 +1,10 @@
+^E:\ASSIGNMENT-2-C++\PROJECT_ROOT\CMAKEFILES\24DFAF48AA35AA9C67D50F2FD8F30AB2\GENERATE.STAMP.RULE
+setlocal
+C:\Users\ragul\cmake-3.31.3-windows-x86_64\bin\cmake.exe -SE:/Assignment-2-C++/Project_Root -BE:/Assignment-2-C++/Project_Root --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file E:/Assignment-2-C++/Project_Root/Conv2DProject.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
