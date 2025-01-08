@@ -1,40 +1,33 @@
 {
     "layers": [
         {
-            "layer_name": "conv2d",
+            "layer_name": "conv2d_6",
             "type": "Conv2D",
-            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/conv2d_input.bin",
-            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/conv2d_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/conv2d_6_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/conv2d_6_output.bin",
             "weights_file_paths": [
-                "E:/Assignment-2-C++/Project_Root/data/weights/conv2d_kernel.bin",
-                "E:/Assignment-2-C++/Project_Root/data/weights/conv2d_bias.bin"
+                "E:/Assignment-2-C++/Project_Root/data/weights/conv2d_6_kernel.bin",
+                "E:/Assignment-2-C++/Project_Root/data/weights/conv2d_6_bias.bin"
             ],
             "attributes": {
                 "input_shape": [32, 32, 3],
                 "output_shape": [32, 32, 64],
-                "kernel_size": [
-                    3,
-                    3
-                ],
-                "strides": [
-                    1,
-                    1
-                ],
+                "kernel_size": [3, 3],
+                "strides": [1, 1],
                 "padding": "same",
                 "activation": "relu"
             }
         },
         {
-            
-            "layer_name": "batch_normalization",
+            "layer_name": "batch_normalization_6",
             "type": "BatchNormalization",
-            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/batch_normalization_input.bin",
-            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/batch_normalization_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/batch_normalization_6_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/batch_normalization_6_output.bin",
             "weights_file_paths": [
-                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_gamma.bin",
-                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_beta.bin",
-                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_moving_mean.bin",
-                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_moving_variance.bin"
+                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_6_gamma.bin",
+                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_6_beta.bin",
+                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_6_moving_mean.bin",
+                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_6_moving_variance.bin"
             ],
             "attributes": {
                 "input_shape": [32, 32, 64],
@@ -42,26 +35,23 @@
             }
         },
         {
-            "layer_name": "max_pooling2d",
+            "layer_name": "max_pooling2d_6",
             "type": "MaxPooling2D",
-            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/max_pooling2d_input.bin",
-            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/max_pooling2d_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/max_pooling2d_6_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/max_pooling2d_6_output.bin",
             "weights_file_paths": [],
             "attributes": {
                 "input_shape": [32, 32, 64],
                 "output_shape": [16, 16, 64],
-                "strides": [
-                    2,
-                    2
-                ],
+                "strides": [2, 2],
                 "padding": "valid"
             }
         },
         {
-            "layer_name": "dropout",
+            "layer_name": "dropout_8",
             "type": "Dropout",
-            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/dropout_input.bin",
-            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/dropout_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/dropout_8_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/dropout_8_output.bin",
             "weights_file_paths": [],
             "attributes": {
                 "input_shape": [16, 16, 64],
@@ -69,39 +59,33 @@
             }
         },
         {
-            "layer_name": "conv2d_1",
+            "layer_name": "conv2d_7",
             "type": "Conv2D",
-            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/conv2d_1_input.bin",
-            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/conv2d_1_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/conv2d_7_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/conv2d_7_output.bin",
             "weights_file_paths": [
-                "E:/Assignment-2-C++/Project_Root/data/weights/conv2d_1_kernel.bin",
-                "E:/Assignment-2-C++/Project_Root/data/weights/conv2d_1_bias.bin"
+                "E:/Assignment-2-C++/Project_Root/data/weights/conv2d_7_kernel.bin",
+                "E:/Assignment-2-C++/Project_Root/data/weights/conv2d_7_bias.bin"
             ],
             "attributes": {
                 "input_shape": [16, 16, 64],
                 "output_shape": [16, 16, 256],
-                "kernel_size": [
-                    3,
-                    3
-                ],
-                "strides": [
-                    1,
-                    1
-                ],
+                "kernel_size": [5, 5],
+                "strides": [1, 1],
                 "padding": "same",
                 "activation": "relu"
             }
         },
         {
-            "layer_name": "batch_normalization_1",
+            "layer_name": "batch_normalization_7",
             "type": "BatchNormalization",
-            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/batch_normalization_1_input.bin",
-            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/batch_normalization_1_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/batch_normalization_7_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/batch_normalization_7_output.bin",
             "weights_file_paths": [
-                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_1_gamma.bin",
-                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_1_beta.bin",
-                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_1_moving_mean.bin",
-                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_1_moving_variance.bin"
+                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_7_gamma.bin",
+                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_7_beta.bin",
+                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_7_moving_mean.bin",
+                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_7_moving_variance.bin"
             ],
             "attributes": {
                 "input_shape": [16, 16, 256],
@@ -109,26 +93,23 @@
             }
         },
         {
-            "layer_name": "max_pooling2d_1",
+            "layer_name": "max_pooling2d_7",
             "type": "MaxPooling2D",
-            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/max_pooling2d_1_input.bin",
-            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/max_pooling2d_1_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/max_pooling2d_7_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/max_pooling2d_7_output.bin",
             "weights_file_paths": [],
             "attributes": {
                 "input_shape": [16, 16, 256],
                 "output_shape": [8, 8, 256],
-                "strides": [
-                    2,
-                    2
-                ],
+                "strides": [2, 2],
                 "padding": "valid"
             }
         },
         {
-            "layer_name": "dropout_1",
+            "layer_name": "dropout_9",
             "type": "Dropout",
-            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/dropout_1_input.bin",
-            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/dropout_1_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/dropout_9_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/dropout_9_output.bin",
             "weights_file_paths": [],
             "attributes": {
                 "input_shape": [8, 8, 256],
@@ -136,39 +117,33 @@
             }
         },
         {
-            "layer_name": "conv2d_2",
+            "layer_name": "conv2d_8",
             "type": "Conv2D",
-            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/conv2d_2_input.bin",
-            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/conv2d_2_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/conv2d_8_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/conv2d_8_output.bin",
             "weights_file_paths": [
-                "E:/Assignment-2-C++/Project_Root/data/weights/conv2d_2_kernel.bin",
-                "E:/Assignment-2-C++/Project_Root/data/weights/conv2d_2_bias.bin"
+                "E:/Assignment-2-C++/Project_Root/data/weights/conv2d_8_kernel.bin",
+                "E:/Assignment-2-C++/Project_Root/data/weights/conv2d_8_bias.bin"
             ],
             "attributes": {
                 "input_shape": [8, 8, 256],
                 "output_shape": [8, 8, 512],
-                "kernel_size": [
-                    3,
-                    3
-                ],
-                "strides": [
-                    1,
-                    1
-                ],
+                "kernel_size": [3, 3],
+                "strides": [1, 1],
                 "padding": "same",
                 "activation": "relu"
             }
         },
         {
-            "layer_name": "batch_normalization_2",
+            "layer_name": "batch_normalization_8",
             "type": "BatchNormalization",
-            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/batch_normalization_2_input.bin",
-            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/batch_normalization_2_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/batch_normalization_8_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/batch_normalization_8_output.bin",
             "weights_file_paths": [
-                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_2_beta.bin",
-                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_2_moving_mean.bin",
-                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_2_gamma.bin",
-                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_2_moving_variance.bin"
+                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_8_gamma.bin",
+                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_8_beta.bin",
+                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_8_moving_mean.bin",
+                "E:/Assignment-2-C++/Project_Root/data/weights/batch_normalization_8_moving_variance.bin"
             ],
             "attributes": {
                 "input_shape": [8, 8, 512],
@@ -176,26 +151,23 @@
             }
         },
         {
-            "layer_name": "max_pooling2d_2",
+            "layer_name": "max_pooling2d_8",
             "type": "MaxPooling2D",
-            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/max_pooling2d_2_input.bin",
-            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/max_pooling2d_2_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/max_pooling2d_8_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/max_pooling2d_8_output.bin",
             "weights_file_paths": [],
             "attributes": {
                 "input_shape": [8, 8, 512],
                 "output_shape": [4, 4, 512],
-                "strides": [
-                    2,
-                    2
-                ],
+                "strides": [2, 2],
                 "padding": "valid"
             }
         },
         {
-            "layer_name": "dropout_2",
+            "layer_name": "dropout_10",
             "type": "Dropout",
-            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/dropout_2_input.bin",
-            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/dropout_2_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/dropout_10_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/dropout_10_output.bin",
             "weights_file_paths": [],
             "attributes": {
                 "input_shape": [4, 4, 512],
@@ -203,10 +175,10 @@
             }
         },
         {
-            "layer_name": "flatten",
+            "layer_name": "flatten_2",
             "type": "Flatten",
-            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/flatten_input.bin",
-            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/flatten_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/flatten_2_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/flatten_2_output.bin",
             "weights_file_paths": [],
             "attributes": {
                 "input_shape": [4, 4, 512],
@@ -214,13 +186,13 @@
             }
         },
         {
-            "layer_name": "dense",
+            "layer_name": "dense_4",
             "type": "Dense",
-            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/dense_input.bin",
-            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/dense_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/dense_4_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/dense_4_output.bin",
             "weights_file_paths": [
-                "E:/Assignment-2-C++/Project_Root/data/weights/dense_kernel.bin",
-                "E:/Assignment-2-C++/Project_Root/data/weights/dense_bias.bin"
+                "E:/Assignment-2-C++/Project_Root/data/weights/dense_4_kernel.bin",
+                "E:/Assignment-2-C++/Project_Root/data/weights/dense_4_bias.bin"
             ],
             "attributes": {
                 "input_shape": [8192],
@@ -229,10 +201,10 @@
             }
         },
         {
-            "layer_name": "dropout_3",
+            "layer_name": "dropout_11",
             "type": "Dropout",
-            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/dropout_3_input.bin",
-            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/dropout_3_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/dropout_11_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/dropout_11_output.bin",
             "weights_file_paths": [],
             "attributes": {
                 "input_shape": [512],
@@ -240,13 +212,13 @@
             }
         },
         {
-            "layer_name": "dense_1",
+            "layer_name": "dense_5",
             "type": "Dense",
-            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/dense_1_input.bin",
-            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/dense_1_output.bin",
+            "input_file_path": "E:/Assignment-2-C++/Project_Root/data/input/dense_5_input.bin",
+            "output_file_path": "E:/Assignment-2-C++/Project_Root/data/output/dense_5_output.bin",
             "weights_file_paths": [
-                "E:/Assignment-2-C++/Project_Root/data/weights/dense_1_kernel.bin",
-                "E:/Assignment-2-C++/Project_Root/data/weights/dense_1_bias.bin"
+                "E:/Assignment-2-C++/Project_Root/data/weights/dense_5_kernel.bin",
+                "E:/Assignment-2-C++/Project_Root/data/weights/dense_5_bias.bin"
             ],
             "attributes": {
                 "input_shape": [512],
